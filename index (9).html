@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digipagos — Fast. Secure. Borderless. Cross-Border Payments for Puerto Rico & U.S. Businesses</title>
+<meta name="description" content="Digipagos connects Puerto Rico and U.S. businesses to regulated payment infrastructure for faster, lower-cost cross-border settlement and real estate closings.">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070b14;
+    --bg-alt: #0c1220;
+    --surface: #101a2e;
+    --surface-line: #1c2942;
+    --ink: #eef2f8;
+    --ink-dim: #9aa7bd;
+    --ink-faint: #66748e;
+    --cyan: #00ADDE;
+    --cyan-soft: rgba(0,173,222,0.14);
+    --gold: #d9a441;
+    --radius: 2px;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Space Grotesk', -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .mono{ font-family:'DM Mono', monospace; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:rgba(7,11,20,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--surface-line);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .nav img.logo{ height:26px; width:auto; }
+  .nav-links{ display:flex; gap:36px; font-size:15px; color:var(--ink-dim); }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-cta{
+    font-size:14px; padding:10px 20px; border:1px solid var(--cyan);
+    color:var(--cyan); border-radius:var(--radius); white-space:nowrap;
+    transition:background .15s, color .15s;
+  }
+  .nav-cta:hover{ background:var(--cyan); color:#04121c; }
+  @media (max-width:860px){ .nav-links{ display:none; } }
+
+  .hero{ padding:110px 0 88px; position:relative; overflow:hidden; }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(700px 380px at 18% -10%, rgba(0,173,222,0.16), transparent 60%),
+      radial-gradient(600px 340px at 92% 10%, rgba(217,164,65,0.08), transparent 60%);
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; max-width:760px; }
+  .eyebrow{
+    font-family:'DM Mono', monospace; font-size:13px; color:var(--cyan);
+    letter-spacing:.04em; margin-bottom:22px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:24px; height:1px; background:var(--cyan); display:inline-block; }
+  h1.hero-title{
+    font-size:clamp(36px, 5.2vw, 58px);
+    line-height:1.1; font-weight:600; letter-spacing:-0.01em;
+    margin:0 0 26px;
+  }
+  .hero-sub{ font-size:18px; color:var(--ink-dim); max-width:580px; margin:0 0 40px; }
+  .hero-actions{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px; font-size:15px; font-weight:500;
+    border-radius:var(--radius); text-decoration:none; border:none; cursor:pointer;
+    transition:transform .15s, background .15s, border-color .15s;
+  }
+  .btn-primary{ background:var(--cyan); color:#04121c; }
+  .btn-primary:hover{ transform:translateY(-1px); }
+  .btn-ghost{ border:1px solid var(--surface-line); color:var(--ink); background:transparent; }
+  .btn-ghost:hover{ border-color:var(--ink-faint); }
+
+  .hero-figure{
+    margin-top:64px; padding-top:32px; border-top:1px solid var(--surface-line);
+    display:grid; grid-template-columns:repeat(3,1fr); gap:28px;
+  }
+  .hero-figure .num{ font-family:'DM Mono', monospace; font-size:24px; color:var(--ink); }
+  .hero-figure .label{ font-size:13px; color:var(--ink-faint); margin-top:6px; }
+  @media (max-width:640px){ .hero-figure{ grid-template-columns:1fr 1fr; } }
+
+  section{ padding:96px 0; }
+  .section-head{ max-width:620px; margin-bottom:52px; }
+  .kicker{ font-family:'DM Mono', monospace; font-size:13px; color:var(--ink-faint); margin-bottom:14px; }
+  h2{ font-size:clamp(26px,3.2vw,34px); font-weight:600; margin:0 0 16px; letter-spacing:-0.01em; }
+  .section-head p{ color:var(--ink-dim); font-size:16px; margin:0; }
+
+  .trust{ padding:40px 0; border-top:1px solid var(--surface-line); border-bottom:1px solid var(--surface-line); background:var(--bg-alt); }
+  .trust .wrap{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px; }
+  .trust-item{ font-size:14px; color:var(--ink-dim); display:flex; align-items:baseline; gap:8px; }
+  .trust-item b{ color:var(--ink); font-weight:600; }
+
+  .segments{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--surface-line); border:1px solid var(--surface-line); }
+  .seg{ background:var(--bg); padding:38px 32px; }
+  .seg .quote{ font-size:15px; color:var(--ink-faint); font-style:italic; margin:0 0 18px; border-left:2px solid var(--surface-line); padding-left:14px; }
+  .seg h3{ font-size:19px; font-weight:600; margin:0 0 12px; }
+  .seg p{ font-size:14px; color:var(--ink-dim); margin:0; }
+  @media (max-width:900px){ .segments{ grid-template-columns:1fr; } }
+
+  .models{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--surface-line); border:1px solid var(--surface-line); }
+  .mcard{ background:var(--bg); padding:44px; }
+  .mcard .vtag{ font-family:'DM Mono', monospace; font-size:12px; color:var(--cyan); margin-bottom:18px; }
+  .mcard h3{ font-size:23px; font-weight:600; margin:0 0 8px; }
+  .mcard .quote{ font-size:14px; color:var(--ink-faint); font-style:italic; margin:0 0 22px; }
+  .mcard ul{ list-style:none; margin:0 0 24px; padding:0; }
+  .mcard li{ font-size:14px; color:var(--ink-dim); padding:11px 0; border-top:1px solid var(--surface-line); display:flex; gap:12px; }
+  .mcard li:first-child{ border-top:none; }
+  .mcard li::before{ content:"—"; color:var(--cyan); flex-shrink:0; }
+  .mcard .best{ font-size:13px; color:var(--ink-faint); }
+  @media (max-width:760px){ .models{ grid-template-columns:1fr; } }
+
+  .steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--surface-line); border:1px solid var(--surface-line); }
+  .step{ background:var(--bg); padding:32px 26px; }
+  .step .si{ font-family:'DM Mono', monospace; font-size:13px; color:var(--ink-faint); margin-bottom:18px; }
+  .step h4{ font-size:16px; font-weight:600; margin:0 0 10px; }
+  .step p{ font-size:14px; color:var(--ink-dim); margin:0; }
+  @media (max-width:900px){ .steps{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .steps{ grid-template-columns:1fr; } }
+
+  .feature-row{ display:flex; flex-wrap:wrap; gap:12px 32px; margin-top:40px; }
+  .feature-row span{ font-size:14px; color:var(--ink-dim); display:flex; align-items:center; gap:8px; }
+  .feature-row span::before{ content:"✓"; color:var(--cyan); font-family:'DM Mono', monospace; }
+
+  .calc{ background:var(--surface); border:1px solid var(--surface-line); padding:48px; }
+  .calc-top{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:16px; margin-bottom:34px; }
+  .calc-amount{ font-family:'DM Mono', monospace; font-size:32px; color:var(--ink); }
+  .calc-slider-wrap{ margin-bottom:8px; }
+  input[type=range]{ width:100%; -webkit-appearance:none; height:2px; background:var(--surface-line); outline:none; margin:18px 0 8px; }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--cyan); cursor:pointer; border:3px solid var(--bg); box-shadow:0 0 0 1px var(--cyan); }
+  input[type=range]::-moz-range-thumb{ width:16px; height:16px; border-radius:50%; background:var(--cyan); cursor:pointer; border:3px solid var(--bg); box-shadow:0 0 0 1px var(--cyan); }
+  .slider-labels{ display:flex; justify-content:space-between; font-size:12px; color:var(--ink-faint); font-family:'DM Mono', monospace; margin-bottom:36px; }
+  .calc-compare{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--surface-line); border:1px solid var(--surface-line); }
+  .calc-col{ background:var(--surface); padding:28px; }
+  .calc-col h5{ font-family:'DM Mono', monospace; font-size:12px; color:var(--ink-faint); margin:0 0 14px; font-weight:500; }
+  .calc-col .cval{ font-family:'DM Mono', monospace; font-size:26px; margin-bottom:8px; }
+  .calc-col.trad .cval{ color:var(--ink-dim); }
+  .calc-col.digi .cval{ color:var(--cyan); }
+  .calc-col .cdesc{ font-size:13px; color:var(--ink-faint); }
+  .calc-savings{ text-align:center; margin-top:28px; font-size:15px; color:var(--ink-dim); }
+  .calc-savings b{ color:var(--ink); font-family:'DM Mono', monospace; }
+
+  .compliance{ background:var(--surface); border:1px solid var(--surface-line); padding:40px 48px; }
+  .compliance h4{ font-family:'DM Mono', monospace; font-size:13px; color:var(--cyan); margin:0 0 14px; font-weight:500; }
+  .compliance p{ color:var(--ink-dim); font-size:14px; margin:0 0 14px; line-height:1.7; }
+  .compliance p:last-child{ margin-bottom:0; color:var(--ink-faint); }
+
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
+  .field{ display:flex; flex-direction:column; gap:8px; }
+  .field.full{ grid-column:1/-1; }
+  .field label{ font-size:13px; color:var(--ink-faint); font-family:'DM Mono', monospace; }
+  .field input, .field select{
+    background:var(--bg-alt); border:1px solid var(--surface-line); color:var(--ink);
+    padding:13px 14px; font-size:15px; border-radius:var(--radius); font-family:inherit;
+  }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--cyan); }
+  .form-note{ font-size:13px; color:var(--ink-faint); margin:20px 0 28px; }
+  .form-status{ font-size:14px; color:var(--cyan); margin-top:18px; display:none; }
+
+  .cta-band{ text-align:center; padding:100px 0; border-top:1px solid var(--surface-line); }
+  .cta-band h2{ max-width:560px; margin:0 auto 18px; }
+  .cta-band p{ color:var(--ink-dim); max-width:460px; margin:0 auto 36px; }
+
+  footer{ border-top:1px solid var(--surface-line); padding:56px 0 40px; }
+  .foot-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; margin-bottom:48px; }
+  footer img.logo{ height:22px; margin-bottom:16px; }
+  footer .foot-desc{ color:var(--ink-faint); font-size:14px; max-width:280px; }
+  .foot-cols{ display:flex; gap:64px; flex-wrap:wrap; }
+  .foot-col h5{ font-size:13px; color:var(--ink-faint); margin:0 0 14px; font-weight:500; font-family:'DM Mono', monospace; }
+  .foot-col a{ display:block; font-size:14px; color:var(--ink-dim); text-decoration:none; margin-bottom:10px; }
+  .foot-col a:hover{ color:var(--ink); }
+  .foot-bottom{ border-top:1px solid var(--surface-line); padding-top:24px; font-size:12px; color:var(--ink-faint); line-height:1.7; }
+  .foot-legal{ margin-top:16px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <img class="logo" src="logo-dark.svg" alt="Digipagos">
+    <nav class="nav-links">
+      <a href="#who">Who It's For</a>
+      <a href="#models">How We Work</a>
+      <a href="#calculator">Savings</a>
+      <a href="#compliance">Compliance</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Book a call</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">CROSS-BORDER PAYMENTS · PUERTO RICO &amp; UNITED STATES</div>
+    <h1 class="hero-title">Fast. Secure. Borderless.</h1>
+    <p class="hero-sub">Cross-border payments for eligible businesses in Puerto Rico and the United States that need faster settlement, lower cost, and a simpler workflow. Receive international payments through regulated backend infrastructure, with settlement directly to your own business account.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#contact">Book a call →</a>
+      <a class="btn btn-ghost" href="#calculator">See your savings</a>
+    </div>
+    <div class="hero-figure">
+      <div><div class="num mono">Minutes</div><div class="label">not days — no correspondent bank delays</div></div>
+      <div><div class="num mono">Your account</div><div class="label">funds land directly, no intermediary balance</div></div>
+      <div><div class="num mono">$0</div><div class="label">monthly platform fee, no minimum volume</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="wrap">
+    <div class="trust-item"><b>Your Title Connection, LLC</b> — first title company in PR approved for crypto closings</div>
+    <div class="trust-item">Settlement via <b>licensed, regulated</b> backend providers</div>
+    <div class="trust-item">Corridors live to <b>Dominican Republic, Colombia &amp; Mexico</b></div>
+  </div>
+</div>
+
+<section id="who">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">WHO IT'S FOR</div>
+      <h2>Built for businesses in Puerto Rico and the United States that send or receive money across borders.</h2>
+    </div>
+    <div class="segments">
+      <div class="seg">
+        <p class="quote">"You lose time and margin every time a client pays by wire."</p>
+        <h3>Export Services &amp; Consultants</h3>
+        <p>Invoice international clients without losing margin to wires and FX spread.</p>
+      </div>
+      <div class="seg">
+        <p class="quote">"Retainers from abroad take a week to clear — if nothing goes wrong."</p>
+        <h3>Law Firms &amp; Professional Services</h3>
+        <p>Collect retainers and fees with a simpler settlement workflow.</p>
+      </div>
+      <div class="seg">
+        <p class="quote">"A slow wire can put a closing at risk."</p>
+        <h3>Real Estate &amp; High-Value Transactions</h3>
+        <p>Support closings involving international buyers — including U.S. investors relocating under Puerto Rico's Act 60 tax incentive — with faster, simpler settlement to escrow or title accounts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="models">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">HOW WE WORK TOGETHER</div>
+      <h2>Two ways to work with Digipagos.</h2>
+      <p>Choose the level of independence that fits your business.</p>
+    </div>
+    <div class="models">
+      <div class="mcard">
+        <div class="vtag mono">01 — MANAGED</div>
+        <h3>Payment Orchestration</h3>
+        <p class="quote">"We connect you to a regulated payment partner and manage the relationship."</p>
+        <ul>
+          <li>You refer transactions, we route them to our regulated partners</li>
+          <li>We help coordinate onboarding and support</li>
+          <li>Hands-off, managed experience</li>
+        </ul>
+        <div class="best">Best for: businesses that want a managed, hands-off experience</div>
+      </div>
+      <div class="mcard">
+        <div class="vtag mono">02 — INDEPENDENT</div>
+        <h3>Self-Custody Setup</h3>
+        <p class="quote">"We help you set up and control your own account — full independence, full control."</p>
+        <ul>
+          <li>Your own account, your own keys</li>
+          <li>Your own direct compliance relationship with the provider</li>
+          <li>We handle setup and walk you through it</li>
+        </ul>
+        <div class="best">Best for: businesses that want direct control, no intermediary</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how-it-works">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">HOW IT WORKS</div>
+      <h2>Four steps. The client flow stays simple.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="si mono">01</div>
+        <h4>Open your own account</h4>
+        <p>Your business completes onboarding directly with the regulated provider — your account, your control.</p>
+      </div>
+      <div class="step">
+        <div class="si mono">02</div>
+        <h4>Client sends payment</h4>
+        <p>Your international client pays in fiat or stablecoin.</p>
+      </div>
+      <div class="step">
+        <div class="si mono">03</div>
+        <h4>Funds convert instantly</h4>
+        <p>Payment is deposited and converted for fast, secure movement.</p>
+      </div>
+      <div class="step">
+        <div class="si mono">04</div>
+        <h4>Withdraw to your bank</h4>
+        <p>Convert back to USD and settle directly to your own business account, on your schedule.</p>
+      </div>
+    </div>
+    <div class="feature-row">
+      <span>Regulated backend partners</span>
+      <span>Funds settle directly to your own bank account</span>
+      <span>No monthly platform fee</span>
+      <span>No minimum volume</span>
+      <span>No crypto experience required</span>
+    </div>
+  </div>
+</section>
+
+<section id="calculator">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">COST COMPARISON</div>
+      <h2>See how much you lose today in wire fees and FX spread.</h2>
+      <p>Drag the slider to your typical payment size.</p>
+    </div>
+    <div class="calc">
+      <div class="calc-top">
+        <div>
+          <div class="kicker" style="margin-bottom:8px;">PAYMENT AMOUNT</div>
+          <div class="calc-amount mono" id="calc-amount-label">$100,000</div>
+        </div>
+      </div>
+      <div class="calc-slider-wrap">
+        <input type="range" id="calc-slider" min="10000" max="1000000" step="5000" value="100000">
+      </div>
+      <div class="slider-labels"><span>$10K</span><span>$500K</span><span>$1M</span></div>
+      <div class="calc-compare">
+        <div class="calc-col trad">
+          <h5>TRADITIONAL WIRE (EST.)</h5>
+          <div class="cval mono" id="calc-trad">$1,100 – $3,200</div>
+          <div class="cdesc">Wire fee + FX spread + correspondent bank fees</div>
+        </div>
+        <div class="calc-col digi">
+          <h5>WITH DIGIPAGOS</h5>
+          <div class="cval mono" id="calc-digi">$800</div>
+          <div class="cdesc">Estimate only — final rate set by the regulated provider and corridor</div>
+        </div>
+      </div>
+      <div class="calc-savings">Estimated savings on this payment <b id="calc-savings">$300 – $2,400</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="compliance">
+  <div class="wrap">
+    <div class="compliance">
+      <h4>BEFORE YOU APPLY</h4>
+      <p><strong>Compliance note:</strong> Digipagos is a technology and referral platform. We do not custody funds, process payments, or act as a money transmitter. Custody, KYC/KYB, and settlement are handled directly by regulated third-party providers.</p>
+      <p>Digipagos es una plataforma de tecnología e intermediación. No custodiamos fondos, no procesamos pagos ni actuamos como transmisor de dinero. La custodia, KYC/KYB y la liquidación son gestionadas directamente por proveedores terceros regulados.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="contact">
+  <div class="wrap">
+    <div class="kicker" style="text-align:center;">GET STARTED</div>
+    <h2>Tell us about your payments.</h2>
+    <p>We'll follow up within one business day.</p>
+
+    <form id="contact-form" style="max-width:640px; margin:0 auto; text-align:left;">
+      <div class="form-grid">
+        <div class="field"><label>NAME</label><input type="text" name="name" required></div>
+        <div class="field"><label>EMAIL</label><input type="email" name="email" required></div>
+        <div class="field full"><label>COMPANY</label><input type="text" name="company" required></div>
+        <div class="field">
+          <label>ESTIMATED MONTHLY VOLUME</label>
+          <select name="volume" required>
+            <option value="">Select a range</option>
+            <option>Under $25,000</option>
+            <option>$25,000 – $100,000</option>
+            <option>$100,000 – $500,000</option>
+            <option>$500,000+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>BUSINESS TYPE</label>
+          <select name="business_type" required>
+            <option value="">Select one</option>
+            <option>Export Services / Consulting</option>
+            <option>Law Firm / Professional Services</option>
+            <option>Real Estate</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>WHICH SERVICE INTERESTS YOU?</label>
+          <select name="service" required>
+            <option value="">Select one</option>
+            <option>Payment Orchestration</option>
+            <option>Self-Custody Setup</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
+      <p class="form-note">By submitting, you confirm you've reviewed the compliance note above.</p>
+      <button type="submit" class="btn btn-primary">Request a call →</button>
+      <p class="form-note" style="margin-top:14px;">No commitment. We'll walk you through the setup.</p>
+      <p class="form-status" id="form-status">Thanks — we've received your details and will reach out within one business day.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <img class="logo" src="logo-dark.svg" alt="Digipagos">
+        <div class="foot-desc">Non-custodial payment infrastructure for real estate and cross-border merchants.</div>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h5>PRODUCT</h5>
+          <a href="#who">Who It's For</a>
+          <a href="#models">How We Work</a>
+          <a href="#calculator">Savings</a>
+        </div>
+        <div class="foot-col">
+          <h5>COMPANY</h5>
+          <a href="#compliance">Compliance</a>
+          <a href="mailto:support@digipagos.us">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      DigiPagos.us is a commercial brand operated by PR DigiPagos LLC, a Puerto Rico limited liability company. DigiPagos is a technology, referral, and payment-infrastructure coordination platform. It does not custody funds, process payments, provide money transmission, or provide tax, legal, investment, or financial advice. Regulated third-party providers are responsible for applicable onboarding, KYC/KYB, AML screening, custody, conversion, transaction approval, and settlement.
+      <div class="foot-legal">
+        <span>© 2026 PR DigiPagos LLC · Puerto Rico · Doing business as DigiPagos.us</span>
+        <span class="mono">digipagos.us</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const slider = document.getElementById('calc-slider');
+  const amountLabel = document.getElementById('calc-amount-label');
+  const tradEl = document.getElementById('calc-trad');
+  const digiEl = document.getElementById('calc-digi');
+  const savingsEl = document.getElementById('calc-savings');
+
+  function fmt(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+
+  function update(){
+    const amt = parseFloat(slider.value);
+    amountLabel.textContent = fmt(amt);
+
+    const tradLow = amt * 0.011 + 25;
+    const tradHigh = amt * 0.032 + 25;
+    const digi = amt * 0.008;
+
+    tradEl.textContent = fmt(tradLow) + ' – ' + fmt(tradHigh);
+    digiEl.textContent = fmt(digi);
+
+    const savLow = tradLow - digi;
+    const savHigh = tradHigh - digi;
+    savingsEl.textContent = fmt(savLow) + ' – ' + fmt(savHigh);
+  }
+
+  slider.addEventListener('input', update);
+  update();
+
+  document.getElementById('contact-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('form-status').style.display = 'block';
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
